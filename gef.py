@@ -1399,6 +1399,7 @@ def capstone_disassemble(location, nb_insn, **kwargs):
     capstone    = sys.modules["capstone"]
     arch, mode  = get_capstone_arch(arch=kwargs.get("arch", None), mode=kwargs.get("mode", None), endian=kwargs.get("endian", None))
     cs          = capstone.Cs(arch, mode)
+    cs.syntax   = CS_OPT_SYNTAX_ATT
     cs.detail   = True
 
     page_start  = align_address_to_page(location)
@@ -9989,7 +9990,7 @@ if __name__  == "__main__":
 
         try:
             # this will raise a gdb.error unless we're on x86
-            gdb.execute("set disassembly-flavor intel")
+            gdb.execute("set disassembly-flavor att")
         except gdb.error:
             # we can safely ignore this
             pass
